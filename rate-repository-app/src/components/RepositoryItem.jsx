@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     rowGap: 5,
+    fontFamily: theme.fontFamilies.main,
   },
   itemContainerBottom: {
     display: 'flex',
@@ -92,10 +93,12 @@ const styles = StyleSheet.create({
     fontSize: theme.fontSizes.body,
     fontWeight: theme.fontWeights.bold,
     color: theme.colors.textPrimary,
+    fontFamily: theme.fontFamilies.main,
   },
   textDescription: {
     fontSize: theme.fontSizes.body,
     color: theme.colors.textSecondary,
+    fontFamily: theme.fontFamilies.main,
   },
   textLanguage: {
     fontSize: theme.fontSizes.body,
@@ -104,20 +107,24 @@ const styles = StyleSheet.create({
     width: 'min-content',
     padding: 5,
     borderRadius: 5,
+    fontFamily: theme.fontFamilies.main,
   },
   textCountContainer: {
     display: 'flex',
     flexDirection: 'column',
     gap: 10,
+    fontFamily: theme.fontFamilies.main,
   },
   textCountNumber: {
     fontSize: theme.fontSizes.body,
     fontWeight: theme.fontWeights.bold,
     color: theme.colors.textPrimary,
+    fontFamily: theme.fontFamilies.main,
   },
   textCountTitle: {
     fontSize: theme.fontSizes.body,
     color: theme.colors.textSecondary,
+    fontFamily: theme.fontFamilies.main,
   },
 });
 

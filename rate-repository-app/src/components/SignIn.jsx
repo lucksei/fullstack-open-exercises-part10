@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     color: theme.colors.textSecondary,
+    fontFamily: theme.fontFamilies.main,
   },
   textInputError: {
     padding: 10,
@@ -77,6 +78,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     color: theme.colors.error,
+    fontFamily: theme.fontFamilies.main,
   },
   submitButton: {
     display: 'flex',
@@ -89,9 +91,11 @@ const styles = StyleSheet.create({
   submitButtonText: {
     color: theme.colors.white,
     fontWeight: theme.fontWeights.bold,
+    fontFamily: theme.fontFamilies.main,
   },
   textError: {
     color: theme.colors.error,
+    fontFamily: theme.fontFamilies.main,
   },
 });
 
