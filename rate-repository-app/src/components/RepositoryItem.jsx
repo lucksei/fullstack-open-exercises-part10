@@ -21,7 +21,9 @@ const RepositoryItem = (props) => {
         <View style={styles.itemContainerTopText}>
           <Text style={styles.textFullName}>{item.fullName}</Text>
           <Text style={styles.textDescription}>{item.description}</Text>
-          <Text style={styles.textLanguage}>{item.language}</Text>
+          <View style={styles.textLanguageContainer}>
+            <Text style={styles.textLanguage}>{item.language}</Text>
+          </View>
         </View>
       </View>
       {/* Stars */}
@@ -100,13 +102,15 @@ const styles = StyleSheet.create({
     color: theme.colors.textSecondary,
     fontFamily: theme.fontFamilies.main,
   },
+  textLanguageContainer: {
+    alignSelf: 'flex-start',
+    backgroundColor: theme.colors.primary,
+    borderRadius: 5,
+    padding: 5,
+  },
   textLanguage: {
     fontSize: theme.fontSizes.body,
     color: theme.colors.white,
-    backgroundColor: theme.colors.primary,
-    width: 'min-content',
-    padding: 5,
-    borderRadius: 5,
     fontFamily: theme.fontFamilies.main,
   },
   textCountContainer: {
