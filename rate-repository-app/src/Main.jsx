@@ -6,6 +6,8 @@ import AppBar from './components/AppBar';
 import { Navigate } from 'react-router-native';
 import theme from './theme';
 
+import { useFonts } from 'expo-font';
+
 const styles = StyleSheet.create({
   content: {
     height: '100%',
@@ -15,6 +17,12 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
+  // eslint-disable-next-line
+  const [loaded, error] = useFonts({
+    Arimo: require('./../assets/fonts/Arimo/static/Arimo-Regular.ttf'),
+    Roboto: require('./../assets/fonts/Roboto/static/Roboto-Regular.ttf'),
+  });
+
   return (
     <View style={styles.content}>
       <AppBar />

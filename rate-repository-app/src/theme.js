@@ -1,5 +1,4 @@
 import { Platform } from "react-native";
-import * as Font from "expo-font";
 
 const theme = {
     colors: {
@@ -18,8 +17,8 @@ const theme = {
     fontFamilies: {
         main: Platform.select({
             android: 'Roboto',
-            ios: 'Arial',
-            default: 'Sans-Serif',
+            ios: 'Arimo',
+            default: 'System',
         }),
     },
     fontWeights: {

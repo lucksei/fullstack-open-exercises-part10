@@ -56,7 +56,7 @@ const AppBar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colors.backgroundSecondary,
+    backgroundColor: theme.colors.textSecondary,
     paddingTop: Constants.statusBarHeight,
     paddingHorizontal: 20,
     width: '100%',
