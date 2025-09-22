@@ -10,7 +10,6 @@ const RepositoryItem = (props) => {
     }
     return count;
   };
-  console.log(item);
   return (
     <View style={styles.itemContainer}>
       <View style={styles.itemContainerTop}>

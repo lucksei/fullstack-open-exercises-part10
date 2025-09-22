@@ -1,4 +1,5 @@
 import { View, StyleSheet } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { Route, Routes } from 'react-router-native';
 import RepositoryList from './components/RepositoryList';
 import SignIn from './components/SignIn';
@@ -7,14 +8,6 @@ import { Navigate } from 'react-router-native';
 import theme from './theme';
 
 import { useFonts } from 'expo-font';
-
-const styles = StyleSheet.create({
-  content: {
-    height: '100%',
-    width: '100%',
-    backgroundColor: theme.colors.backgroundPrimary,
-  },
-});
 
 const Main = () => {
   // eslint-disable-next-line
@@ -32,8 +25,21 @@ const Main = () => {
         <Route path="/signin" element={<SignIn />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <StatusBar style="auto" />
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    width: '100%',
+    backgroundColor: theme.colors.backgroundPrimary,
+    padding: 0,
+    margin: 0,
+  },
+});
 export default Main;
