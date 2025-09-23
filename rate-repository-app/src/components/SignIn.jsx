@@ -56,11 +56,12 @@ const SignIn = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colors.white,
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
+    flex: 1,
+    alignItems: 'stretch',
+    justifyContent: 'start',
     height: '100%',
+    width: '100%',
+    backgroundColor: theme.colors.white,
     padding: 25,
     rowGap: 10,
   },
