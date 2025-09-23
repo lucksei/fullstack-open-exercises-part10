@@ -17,7 +17,7 @@ const Main = () => {
   });
 
   return (
-    <View style={styles.content}>
+    <View style={styles.container}>
       <AppBar />
       <Routes>
         <Route path="/" element={<RepositoryList />} />
