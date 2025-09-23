@@ -1,10 +1,23 @@
 import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import Constants from 'expo-constants';
+import { useQuery } from '@apollo/client';
+import { ME } from '../graphql/queries';
+import useSignIn from '../hooks/useSignIn';
 import theme from '../theme';
 
 const AppBar = () => {
   const navigate = useNavigate();
+  const { data } = useQuery(ME, {
+    fetchPolicy: 'cache-and-network',
+  });
+  const { signOut } = useSignIn();
+  const me = data?.me;
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/signin');
+  };
 
   return (
     <View style={styles.container}>
@@ -16,38 +29,22 @@ const AppBar = () => {
           >
             <Text style={styles.text}>Repositories</Text>
           </Pressable>
-          <Pressable
-            style={styles.appBarButton}
-            onPress={() => navigate('/signin')}
-          >
-            <Text style={styles.text}>Sign in</Text>
-          </Pressable>
-          {/* START Remove later */}
-          <Pressable
-            style={styles.appBarButton}
-            onPress={() => navigate('/signin')}
-          >
-            <Text style={styles.text}>Sign in Two</Text>
-          </Pressable>
-          <Pressable
-            style={styles.appBarButton}
-            onPress={() => navigate('/signin')}
-          >
-            <Text style={styles.text}>Lorem Ipsum Dolor Sit Amet</Text>
-          </Pressable>
-          <Pressable
-            style={styles.appBarButton}
-            onPress={() => navigate('/signin')}
-          >
-            <Text style={styles.text}>Lorem Ipsum Dolor Sit Amet</Text>
-          </Pressable>
-          <Pressable
-            style={styles.appBarButton}
-            onPress={() => navigate('/signin')}
-          >
-            <Text style={styles.text}>Lorem Ipsum Dolor Sit Amet</Text>
-          </Pressable>
-          {/* END Remove later */}
+          {!me && (
+            <Pressable
+              style={styles.appBarButton}
+              onPress={() => navigate('/signin')}
+            >
+              <Text style={styles.text}>Sign in</Text>
+            </Pressable>
+          )}
+          {me && (
+            <Pressable
+              style={styles.appBarButton}
+              onPress={() => handleSignOut()}
+            >
+              <Text style={styles.text}>Sign out ({me.username})</Text>
+            </Pressable>
+          )}
         </View>
       </ScrollView>
     </View>
