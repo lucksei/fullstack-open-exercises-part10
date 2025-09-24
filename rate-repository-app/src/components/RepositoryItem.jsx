@@ -1,17 +1,12 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { formatCount } from '../utils/helpers';
 import theme from '../theme';
 
 const RepositoryItem = (props) => {
   const { item } = props;
 
-  const formatCount = (count) => {
-    if (count > 1000) {
-      return (count / 1000).toFixed(1) + 'k';
-    }
-    return count;
-  };
   return (
-    <View style={styles.itemContainer}>
+    <View style={styles.itemContainer} testID="repositoryItem">
       <View style={styles.itemContainerTop}>
         <Image
           source={{ uri: item.ownerAvatarUrl }}
