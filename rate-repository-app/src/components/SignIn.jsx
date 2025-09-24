@@ -15,11 +15,56 @@ const validationSchema = yup.object().shape({
   password: yup.string().required('Password is required'),
 });
 
+export const SignInContainer = ({ onSubmit }) => {
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
+
+  return (
+    <View style={styles.container}>
+      <View>
+        <TextInput
+          placeholder="Username"
+          value={formik.values.username}
+          onChangeText={formik.handleChange('username')}
+          testID="username"
+          style={
+            formik.errors.username ? styles.textInputError : styles.textInput
+          }
+        />
+        <Text style={styles.textError}>{formik.errors.username}</Text>
+      </View>
+      <View>
+        <TextInput
+          placeholder="Password"
+          value={formik.values.password}
+          onChangeText={formik.handleChange('password')}
+          testID="password"
+          style={
+            formik.errors.password ? styles.textInputError : styles.textInput
+          }
+        />
+        <Text style={styles.textError}>{formik.errors.password}</Text>
+      </View>
+      <Pressable
+        onPress={formik.handleSubmit}
+        style={styles.submitButton}
+        testID="submit"
+      >
+        <Text style={styles.submitButtonText}>Sign in</Text>
+      </Pressable>
+    </View>
+  );
+};
+
 const SignIn = () => {
   const navigate = useNavigate();
   const { signIn } = useSignIn();
 
   const onSubmit = async (values) => {
+    console.log(values);
     const { username, password } = values;
     console.log('Submitted values:', { username, password });
 
@@ -37,42 +82,7 @@ const SignIn = () => {
     }
   };
 
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit,
-  });
-
-  return (
-    <View style={styles.container}>
-      <View>
-        <TextInput
-          placeholder="Username"
-          value={formik.values.username}
-          onChangeText={formik.handleChange('username')}
-          style={
-            formik.errors.username ? styles.textInputError : styles.textInput
-          }
-        />
-        <Text style={styles.textError}>{formik.errors.username}</Text>
-      </View>
-      <View>
-        <TextInput
-          placeholder="Password"
-          value={formik.values.password}
-          onChangeText={formik.handleChange('password')}
-          style={
-            formik.errors.password ? styles.textInputError : styles.textInput
-          }
-        />
-        <Text style={styles.textError}>{formik.errors.password}</Text>
-      </View>
-      <Pressable onPress={formik.handleSubmit} style={styles.submitButton}>
-        <Text style={styles.submitButtonText}>Sign in</Text>
-      </Pressable>
-    </View>
-  );
-  // return <Text>The sign-in view</Text>;
+  return <SignInContainer onSubmit={onSubmit} />;
 };
 
 const styles = StyleSheet.create({
