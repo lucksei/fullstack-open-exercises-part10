@@ -1,10 +1,10 @@
 import { View, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Route, Routes } from 'react-router-native';
-import RepositoryList from './components/RepositoryList';
-import SignIn from './components/SignIn';
+import { Route, Routes, Navigate } from 'react-router-native';
 import AppBar from './components/AppBar';
-import { Navigate } from 'react-router-native';
+import SignIn from './components/SignIn';
+import RepositoryList from './components/RepositoryList';
+import Repository from './components/Repository';
 import theme from './theme';
 
 import { useFonts } from 'expo-font';
@@ -21,8 +21,9 @@ const Main = () => {
       <AppBar />
       <Routes>
         <Route path="/" element={<RepositoryList />} />
-        <Route path="/repositories" element={<RepositoryList />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/repositories" element={<RepositoryList />} />
+        <Route path="/repository/:id" element={<Repository />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <StatusBar style="auto" />
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'start',
     height: '100%',
     width: '100%',
     backgroundColor: theme.colors.backgroundPrimary,

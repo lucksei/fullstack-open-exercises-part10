@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     fontSize: theme.fontSizes.body,
     fontWeight: theme.fontWeights.bold,
     fontFamily: theme.fontFamilies.main,
-    textTransform: 'uppercase',
+    // textTransform: 'uppercase',
   },
   appBarButton: {
     marginRight: 10,

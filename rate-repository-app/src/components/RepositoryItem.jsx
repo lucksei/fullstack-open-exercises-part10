@@ -1,5 +1,6 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { formatCount } from '../utils/helpers';
+import * as Linking from 'expo-linking';
 import theme from '../theme';
 
 const RepositoryItem = (props) => {
@@ -21,7 +22,7 @@ const RepositoryItem = (props) => {
         </View>
       </View>
       {/* Stars */}
-      <View style={styles.itemContainerBottom}>
+      <View style={styles.itemContainerStats}>
         <View style={styles.textCountContainer}>
           <Text style={styles.textCountNumber}>
             {formatCount(item.stargazersCount)}
@@ -50,6 +51,16 @@ const RepositoryItem = (props) => {
           <Text style={styles.textCountTitle}>Rating</Text>
         </View>
       </View>
+      {item.url && (
+        <View style={styles.itemContainerBottom}>
+          <Pressable
+            style={styles.button}
+            onPress={() => Linking.openURL(item.url)}
+          >
+            <Text style={styles.buttonText}>Open in GitHub</Text>
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 };
@@ -59,6 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
     padding: 15,
   },
   itemContainerTop: {
@@ -68,12 +80,20 @@ const styles = StyleSheet.create({
     paddingBottom: 25,
   },
   itemContainerTopText: {
-    display: 'flex',
+    flex: 1,
     flexDirection: 'column',
     rowGap: 5,
+    width: '100%',
     fontFamily: theme.fontFamilies.main,
   },
-  itemContainerBottom: {
+  itemContainerTopTextDescription: {
+    flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    width: '100%',
+    fontFamily: theme.fontFamilies.main,
+  },
+  itemContainerStats: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -122,6 +142,28 @@ const styles = StyleSheet.create({
   textCountTitle: {
     fontSize: theme.fontSizes.body,
     color: theme.colors.textSecondary,
+    fontFamily: theme.fontFamilies.main,
+  },
+  itemContainerBottom: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingTop: 10,
+  },
+  button: {
+    backgroundColor: theme.colors.primary,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    padding: 15,
+    width: '100%',
+  },
+  buttonText: {
+    fontSize: theme.fontSizes.body,
+    fontWeight: theme.fontWeights.bold,
+    color: theme.colors.white,
     fontFamily: theme.fontFamilies.main,
   },
 });
