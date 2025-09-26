@@ -4,20 +4,20 @@ import * as Linking from 'expo-linking';
 import theme from '../theme';
 
 const RepositoryItem = (props) => {
-  const { item } = props;
+  const { repository } = props;
 
   return (
     <View style={styles.itemContainer} testID="repositoryItem">
       <View style={styles.itemContainerTop}>
         <Image
-          source={{ uri: item.ownerAvatarUrl }}
+          source={{ uri: repository.ownerAvatarUrl }}
           style={styles.imageAvatar}
         />
         <View style={styles.itemContainerTopText}>
-          <Text style={styles.textFullName}>{item.fullName}</Text>
-          <Text style={styles.textDescription}>{item.description}</Text>
+          <Text style={styles.textFullName}>{repository.fullName}</Text>
+          <Text style={styles.textDescription}>{repository.description}</Text>
           <View style={styles.textLanguageContainer}>
-            <Text style={styles.textLanguage}>{item.language}</Text>
+            <Text style={styles.textLanguage}>{repository.language}</Text>
           </View>
         </View>
       </View>
@@ -25,37 +25,37 @@ const RepositoryItem = (props) => {
       <View style={styles.itemContainerStats}>
         <View style={styles.textCountContainer}>
           <Text style={styles.textCountNumber}>
-            {formatCount(item.stargazersCount)}
+            {formatCount(repository.stargazersCount)}
           </Text>
           <Text style={styles.textCountTitle}>Stars</Text>
         </View>
         {/* Forks */}
         <View style={styles.textCountContainer}>
           <Text style={styles.textCountNumber}>
-            {formatCount(item.forksCount)}
+            {formatCount(repository.forksCount)}
           </Text>
           <Text style={styles.textCountTitle}>Forks</Text>
         </View>
         {/* Reviews */}
         <View style={styles.textCountContainer}>
           <Text style={styles.textCountNumber}>
-            {formatCount(item.reviewCount)}
+            {formatCount(repository.reviewCount)}
           </Text>
           <Text style={styles.textCountTitle}>Reviews</Text>
         </View>
         {/* Rating */}
         <View style={styles.textCountContainer}>
           <Text style={styles.textCountNumber}>
-            {formatCount(item.ratingAverage)}
+            {formatCount(repository.ratingAverage)}
           </Text>
           <Text style={styles.textCountTitle}>Rating</Text>
         </View>
       </View>
-      {item.url && (
+      {repository.url && (
         <View style={styles.itemContainerBottom}>
           <Pressable
             style={styles.button}
-            onPress={() => Linking.openURL(item.url)}
+            onPress={() => Linking.openURL(repository.url)}
           >
             <Text style={styles.buttonText}>Open in GitHub</Text>
           </Pressable>

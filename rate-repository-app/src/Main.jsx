@@ -4,7 +4,7 @@ import { Route, Routes, Navigate } from 'react-router-native';
 import AppBar from './components/AppBar';
 import SignIn from './components/SignIn';
 import RepositoryList from './components/RepositoryList';
-import Repository from './components/Repository';
+import RepositoryInfo from './components/RepositoryInfo';
 import theme from './theme';
 
 import { useFonts } from 'expo-font';
@@ -23,7 +23,7 @@ const Main = () => {
         <Route path="/" element={<RepositoryList />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/repositories" element={<RepositoryList />} />
-        <Route path="/repository/:id" element={<Repository />} />
+        <Route path="/repository/:id" element={<RepositoryInfo />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <StatusBar style="auto" />

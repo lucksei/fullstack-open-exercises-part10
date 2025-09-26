@@ -2,9 +2,9 @@ import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import Constants from 'expo-constants';
 import { useQuery } from '@apollo/client';
-import { ME } from '../graphql/queries';
-import useSignIn from '../hooks/useSignIn';
-import theme from '../theme';
+import { ME } from '../../graphql/queries';
+import useSignIn from '../../hooks/useSignIn';
+import theme from '../../theme';
 
 const AppBar = () => {
   const navigate = useNavigate();

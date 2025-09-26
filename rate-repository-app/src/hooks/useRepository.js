@@ -6,6 +6,7 @@ const useRepository = (id) => {
         variables: { id },
         fetchPolicy: 'cache-and-network',
     });
+    console.log(data?.repository);
     return { repository: data?.repository, loading, error };
 };
 
