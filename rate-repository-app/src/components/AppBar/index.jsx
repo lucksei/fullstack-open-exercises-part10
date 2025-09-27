@@ -29,12 +29,14 @@ const AppBar = () => {
           >
             <Text style={styles.text}>Repositories</Text>
           </Pressable>
-          <Pressable
-            style={styles.appBarButton}
-            onPress={() => navigate('/createreview')}
-          >
-            <Text style={styles.text}>Create a review</Text>
-          </Pressable>
+          {me && (
+            <Pressable
+              style={styles.appBarButton}
+              onPress={() => navigate('/createreview')}
+            >
+              <Text style={styles.text}>Create a review</Text>
+            </Pressable>
+          )}
           {!me && (
             <Pressable
               style={styles.appBarButton}

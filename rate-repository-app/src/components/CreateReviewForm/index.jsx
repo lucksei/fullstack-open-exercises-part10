@@ -1,44 +1,50 @@
 import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-native';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import useCreateReview from '../../hooks/useCreateReview';
 import theme from '../../theme';
 
 const initialValues = {
-  username: '',
-  password: '',
+  ownerName: '',
+  repositoryName: '',
   rating: 0,
   review: '',
 };
 
 const validationSchema = yup.object().shape({
-  username: yup.string().required('Username is required'),
+  ownerName: yup.string().required('Username is required'),
   repositoryName: yup.string().required('Repository name is required'),
   rating: yup
-    .number('Rating must be a number')
+    .number()
+    .typeError('Rating must be a number')
     .min(0, 'Rating must be between 0 and 100')
     .max(100, 'Rating must be between 0 and 100')
     .required('Rating is required'),
   review: yup.string().optional(),
 });
 
-const CreateReviewForm = ({ onSubmit, authError }) => {
+const CreateReviewFormContainer = ({ onSubmit, submitError }) => {
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit,
   });
+
   return (
     <View style={styles.container}>
       <View>
         <TextInput
-          placeholder="Username"
-          value={formik.values.username}
-          onChangeText={formik.handleChange('username')}
+          placeholder="Owner name"
+          value={formik.values.ownerName}
+          onChangeText={formik.handleChange('ownerName')}
           testID="username"
           style={
-            formik.errors.username ? styles.textInputError : styles.textInput
+            formik.errors.ownerName ? styles.textInputError : styles.textInput
           }
         />
+        <Text style={styles.textError}>{formik.errors.username}</Text>
       </View>
       <View>
         <TextInput
@@ -52,6 +58,7 @@ const CreateReviewForm = ({ onSubmit, authError }) => {
               : styles.textInput
           }
         />
+        <Text style={styles.textError}>{formik.errors.repositoryName}</Text>
       </View>
       <View>
         <TextInput
@@ -63,6 +70,7 @@ const CreateReviewForm = ({ onSubmit, authError }) => {
             formik.errors.rating ? styles.textInputError : styles.textInput
           }
         />
+        <Text style={styles.textError}>{formik.errors.rating}</Text>
       </View>
       <View>
         <TextInput
@@ -73,6 +81,7 @@ const CreateReviewForm = ({ onSubmit, authError }) => {
           testID="review"
           style={styles.textInput}
         />
+        <Text style={styles.textError}>{formik.errors.review}</Text>
       </View>
       <Pressable
         onPress={formik.handleSubmit}
@@ -81,10 +90,39 @@ const CreateReviewForm = ({ onSubmit, authError }) => {
       >
         <Text style={styles.submitButtonText}>Submit Review</Text>
       </Pressable>
-      <View style={styles.authError}>
-        <Text style={styles.textError}>{authError}</Text>
+      <View style={styles.submitError}>
+        <Text style={styles.textError}>{submitError}</Text>
       </View>
     </View>
+  );
+};
+
+const CreateReviewForm = () => {
+  const navigate = useNavigate();
+  const { createReview } = useCreateReview();
+  const [submitError, setSubmitError] = useState(null);
+
+  const onSubmit = async (values) => {
+    const { ownerName, rating, repositoryName, review } = values;
+
+    try {
+      const { data } = await createReview({
+        ownerName,
+        rating: Number(rating),
+        repositoryName,
+        text: review,
+      });
+      navigate(`/repository/${data.createReview.repositoryId}`);
+    } catch (error) {
+      if (error.graphQLErrors) {
+        console.log(error.graphQLErrors);
+        setSubmitError(error.graphQLErrors[0].message);
+      }
+    }
+  };
+
+  return (
+    <CreateReviewFormContainer onSubmit={onSubmit} submitError={submitError} />
   );
 };
 
@@ -132,7 +170,7 @@ const styles = StyleSheet.create({
     color: theme.colors.error,
     fontFamily: theme.fontFamilies.main,
   },
-  authError: {
+  submitError: {
     flex: 1,
     flexGrow: 0,
     alignItems: 'center',
