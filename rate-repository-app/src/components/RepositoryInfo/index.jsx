@@ -41,6 +41,7 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 0,
     width: '100%',
   },
   separator: {

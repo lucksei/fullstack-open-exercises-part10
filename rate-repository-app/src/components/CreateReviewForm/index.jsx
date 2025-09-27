@@ -1,27 +1,32 @@
-import { Text, View, Pressable, TextInput, StyleSheet } from 'react-native';
-import { useNavigate } from 'react-router-native';
+import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import useSignIn from '../../hooks/useSignIn';
 import theme from '../../theme';
 
 const initialValues = {
   username: '',
   password: '',
+  rating: 0,
+  review: '',
 };
 
 const validationSchema = yup.object().shape({
   username: yup.string().required('Username is required'),
-  password: yup.string().required('Password is required'),
+  repositoryName: yup.string().required('Repository name is required'),
+  rating: yup
+    .number('Rating must be a number')
+    .min(0, 'Rating must be between 0 and 100')
+    .max(100, 'Rating must be between 0 and 100')
+    .required('Rating is required'),
+  review: yup.string().optional(),
 });
 
-export const SignInContainer = ({ onSubmit }) => {
+const CreateReviewForm = ({ onSubmit, authError }) => {
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit,
   });
-
   return (
     <View style={styles.container}>
       <View>
@@ -34,50 +39,53 @@ export const SignInContainer = ({ onSubmit }) => {
             formik.errors.username ? styles.textInputError : styles.textInput
           }
         />
-        <Text style={styles.textError}>{formik.errors.username}</Text>
       </View>
       <View>
         <TextInput
-          placeholder="Password"
-          value={formik.values.password}
-          onChangeText={formik.handleChange('password')}
-          testID="password"
+          placeholder="Repository name"
+          value={formik.values.repositoryName}
+          onChangeText={formik.handleChange('repositoryName')}
+          testID="repositoryName"
           style={
-            formik.errors.password ? styles.textInputError : styles.textInput
+            formik.errors.repositoryName
+              ? styles.textInputError
+              : styles.textInput
           }
         />
-        <Text style={styles.textError}>{formik.errors.password}</Text>
+      </View>
+      <View>
+        <TextInput
+          placeholder="Rating"
+          value={formik.values.rating}
+          onChangeText={formik.handleChange('rating')}
+          testID="rating"
+          style={
+            formik.errors.rating ? styles.textInputError : styles.textInput
+          }
+        />
+      </View>
+      <View>
+        <TextInput
+          placeholder="Review"
+          value={formik.values.review}
+          onChangeText={formik.handleChange('review')}
+          multiline
+          testID="review"
+          style={styles.textInput}
+        />
       </View>
       <Pressable
         onPress={formik.handleSubmit}
         style={styles.submitButton}
         testID="submit"
       >
-        <Text style={styles.submitButtonText}>Sign in</Text>
+        <Text style={styles.submitButtonText}>Submit Review</Text>
       </Pressable>
+      <View style={styles.authError}>
+        <Text style={styles.textError}>{authError}</Text>
+      </View>
     </View>
   );
-};
-
-const SignIn = () => {
-  const navigate = useNavigate();
-  const { signIn } = useSignIn();
-
-  const onSubmit = async (values) => {
-    const { username, password } = values;
-
-    try {
-      const { data } = await signIn({ username, password });
-
-      if (data.authenticate.accessToken) {
-        navigate('/');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  return <SignInContainer onSubmit={onSubmit} />;
 };
 
 const styles = StyleSheet.create({
@@ -124,6 +132,12 @@ const styles = StyleSheet.create({
     color: theme.colors.error,
     fontFamily: theme.fontFamilies.main,
   },
+  authError: {
+    flex: 1,
+    flexGrow: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
-export default SignIn;
+export default CreateReviewForm;

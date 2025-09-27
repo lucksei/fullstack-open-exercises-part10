@@ -29,6 +29,12 @@ const AppBar = () => {
           >
             <Text style={styles.text}>Repositories</Text>
           </Pressable>
+          <Pressable
+            style={styles.appBarButton}
+            onPress={() => navigate('/createreview')}
+          >
+            <Text style={styles.text}>Create a review</Text>
+          </Pressable>
           {!me && (
             <Pressable
               style={styles.appBarButton}
@@ -62,6 +68,7 @@ const styles = StyleSheet.create({
   containerScroll: {
     display: 'flex',
     flexDirection: 'row',
+    columnGap: 10,
     flexWrap: 'nowrap',
     alignItems: 'center',
   },
@@ -70,7 +77,6 @@ const styles = StyleSheet.create({
     fontSize: theme.fontSizes.body,
     fontWeight: theme.fontWeights.bold,
     fontFamily: theme.fontFamilies.main,
-    // textTransform: 'uppercase',
   },
   appBarButton: {
     marginRight: 10,
