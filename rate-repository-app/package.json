@@ -15,6 +15,7 @@
     "@expo/metro-config": "^0.18.4",
     "@expo/metro-runtime": "~3.2.3",
     "@react-native-async-storage/async-storage": "~1.23.0",
+    "@react-native-picker/picker": "^2.7.5",
     "date-fns": "^4.1.0",
     "expo": "~51.0.0",
     "expo-linking": "^6.3.1",
