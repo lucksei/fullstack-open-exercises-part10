@@ -16,7 +16,7 @@ const AppBar = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate('/signin');
+    navigate('/');
   };
 
   return (
@@ -51,6 +51,14 @@ const AppBar = () => {
               onPress={() => handleSignOut()}
             >
               <Text style={styles.text}>Sign out ({me.username})</Text>
+            </Pressable>
+          )}
+          {!me && (
+            <Pressable
+              style={styles.appBarButton}
+              onPress={() => navigate('/signup')}
+            >
+              <Text style={styles.text}>Sign up</Text>
             </Pressable>
           )}
         </View>

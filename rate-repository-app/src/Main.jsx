@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Route, Routes, Navigate } from 'react-router-native';
 import AppBar from './components/AppBar';
 import SignInForm from './components/SignInForm';
+import SignUpForm from './components/SignUpForm';
 import CreateReviewForm from './components/CreateReviewForm';
 import RepositoryList from './components/RepositoryList';
 import RepositoryInfo from './components/RepositoryInfo';
@@ -23,6 +24,7 @@ const Main = () => {
       <Routes>
         <Route path="/" element={<RepositoryList />} />
         <Route path="/signin" element={<SignInForm />} />
+        <Route path="/signup" element={<SignUpForm />} />
         <Route path="/createreview" element={<CreateReviewForm />} />
         <Route path="/repositories" element={<RepositoryList />} />
         <Route path="/repository/:id" element={<RepositoryInfo />} />

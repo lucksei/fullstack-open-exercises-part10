@@ -3,26 +3,38 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-native';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import useSignIn from '../../hooks/useSignIn';
+import useSignUp from '../../hooks/useSignUp';
 import theme from '../../theme';
 
 const initialValues = {
   username: '',
   password: '',
+  confirmPassword: '',
 };
 
 const validationSchema = yup.object().shape({
-  username: yup.string().required('Username is required'),
-  password: yup.string().required('Password is required'),
+  username: yup
+    .string()
+    .min(5, 'Username must be at least 5 characters long')
+    .max(30, 'Username must be at most 30 characters long')
+    .required('Username is required'),
+  password: yup
+    .string()
+    .min(5, 'Password must be at least 5 characters long')
+    .max(30, 'Password must be at most 30 characters long')
+    .required('Password is required'),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .required('Confirm Password is required'),
 });
 
-export const SignInFormContainer = ({ onSubmit, submitError }) => {
+const SignUpFormContainer = ({ onSubmit, submitError }) => {
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit,
   });
-
   return (
     <View style={styles.container}>
       <View>
@@ -30,7 +42,6 @@ export const SignInFormContainer = ({ onSubmit, submitError }) => {
           placeholder="Username"
           value={formik.values.username}
           onChangeText={formik.handleChange('username')}
-          testID="username"
           style={
             formik.errors.username ? styles.textInputError : styles.textInput
           }
@@ -42,39 +53,48 @@ export const SignInFormContainer = ({ onSubmit, submitError }) => {
           placeholder="Password"
           value={formik.values.password}
           onChangeText={formik.handleChange('password')}
-          testID="password"
           style={
             formik.errors.password ? styles.textInputError : styles.textInput
           }
         />
         <Text style={styles.textError}>{formik.errors.password}</Text>
       </View>
+      <View>
+        <TextInput
+          placeholder="Confirm Password"
+          value={formik.values.confirmPassword}
+          onChangeText={formik.handleChange('confirmPassword')}
+          style={
+            formik.errors.confirmPassword
+              ? styles.textInputError
+              : styles.textInput
+          }
+        />
+        <Text style={styles.textError}>{formik.errors.confirmPassword}</Text>
+      </View>
       <Pressable
-        onPress={formik.handleSubmit}
         style={styles.submitButton}
-        testID="submit"
+        onPress={() => formik.handleSubmit()}
       >
-        <Text style={styles.submitButtonText}>Sign in</Text>
+        <Text style={styles.submitButtonText}>Sign Up</Text>
       </Pressable>
       <View style={styles.submitError}>
-        <Text style={styles.textError}>{submitError}</Text>
+        <Text style={styles.submitError}>{submitError}</Text>
       </View>
     </View>
   );
 };
 
-const SignInForm = () => {
+const SignUpForm = () => {
   const navigate = useNavigate();
-  const { signIn } = useSignIn();
+  const { signUp } = useSignUp();
   const [submitError, setSubmitError] = useState(null);
 
   const onSubmit = async (values) => {
     const { username, password } = values;
-
     try {
-      const { data } = await signIn({ username, password });
-
-      if (data.authenticate.accessToken) {
+      const { data } = await signUp({ username, password });
+      if (data.createUser.username) {
         navigate('/');
       }
     } catch (error) {
@@ -85,7 +105,7 @@ const SignInForm = () => {
     }
   };
 
-  return <SignInFormContainer onSubmit={onSubmit} submitError={submitError} />;
+  return <SignUpFormContainer onSubmit={onSubmit} submitError={submitError} />;
 };
 
 const styles = StyleSheet.create({
@@ -141,4 +161,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignInForm;
+export default SignUpForm;

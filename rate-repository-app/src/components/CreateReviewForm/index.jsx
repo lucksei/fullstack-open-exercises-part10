@@ -171,7 +171,8 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamilies.main,
   },
   submitError: {
-    flex: 1,
+    flex: 0,
+    flexDirection: 'row',
     flexGrow: 0,
     alignItems: 'center',
     justifyContent: 'center',
