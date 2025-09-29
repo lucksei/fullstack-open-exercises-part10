@@ -2,7 +2,7 @@ import { View, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { Picker } from '@react-native-picker/picker';
 
-const ListHeader = ({ setOrderBy, setOrderDirection }) => {
+const SortBar = ({ setOrderBy, setOrderDirection }) => {
   const [sort, setSort] = useState('latestRepositories');
 
   const handleSort = (itemValue) => {
@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
-export default ListHeader;
+export default SortBar;

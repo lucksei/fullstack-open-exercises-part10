@@ -1,17 +1,22 @@
 import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-native';
+import { useDebounce } from 'use-debounce';
 import useRepositories from '../../hooks/useRepositories';
 import RepositoryItem from '../RepositoryItem';
-import ListHeader from './ListHeader';
+import SortBar from './SortBar';
+import SearchBar from './SearchBar';
 
 const RepositoryList = () => {
   const navigate = useNavigate();
   const [orderBy, setOrderBy] = useState('CREATED_AT');
   const [orderDirection, setOrderDirection] = useState('DESC');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchKeyword] = useDebounce(searchQuery, 500);
   const { repositories } = useRepositories({
     orderBy,
     orderDirection,
+    searchKeyword,
   });
   const onPress = (id) => {
     navigate(`/repository/${id}`);
@@ -22,6 +27,8 @@ const RepositoryList = () => {
       repositories={repositories}
       setOrderBy={setOrderBy}
       setOrderDirection={setOrderDirection}
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
       onPress={onPress}
     />
   );
@@ -31,6 +38,8 @@ export const RepositoryListContainer = ({
   repositories,
   setOrderBy,
   setOrderDirection,
+  searchQuery,
+  setSearchQuery,
   onPress,
 }) => {
   const repositoryNodes = repositories
@@ -48,10 +57,16 @@ export const RepositoryListContainer = ({
       keyExtractor={(item) => item.id}
       ItemSeparatorComponent={ItemSeparator}
       ListHeaderComponent={
-        <ListHeader
-          setOrderBy={setOrderBy}
-          setOrderDirection={setOrderDirection}
-        />
+        <View>
+          <SearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+          <SortBar
+            setOrderBy={setOrderBy}
+            setOrderDirection={setOrderDirection}
+          />
+        </View>
       }
       style={styles.container}
     />
