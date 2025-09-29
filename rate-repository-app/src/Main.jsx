@@ -7,6 +7,7 @@ import SignUpForm from './components/SignUpForm';
 import CreateReviewForm from './components/CreateReviewForm';
 import RepositoryList from './components/RepositoryList';
 import RepositoryInfo from './components/RepositoryInfo';
+import MyReviews from './components/MyReviews';
 import theme from './theme';
 
 import { useFonts } from 'expo-font';
@@ -28,6 +29,7 @@ const Main = () => {
         <Route path="/createreview" element={<CreateReviewForm />} />
         <Route path="/repositories" element={<RepositoryList />} />
         <Route path="/repository/:id" element={<RepositoryInfo />} />
+        <Route path="/myreviews" element={<MyReviews />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <StatusBar style="auto" />

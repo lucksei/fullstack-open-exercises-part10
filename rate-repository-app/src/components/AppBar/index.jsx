@@ -37,6 +37,14 @@ const AppBar = () => {
               <Text style={styles.text}>Create a review</Text>
             </Pressable>
           )}
+          {me && (
+            <Pressable
+              style={styles.appBarButton}
+              onPress={() => navigate('/myreviews')}
+            >
+              <Text style={styles.text}>My reviews</Text>
+            </Pressable>
+          )}
           {!me && (
             <Pressable
               style={styles.appBarButton}
