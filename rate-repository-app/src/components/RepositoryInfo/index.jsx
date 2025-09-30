@@ -6,8 +6,14 @@ import ReviewItem from '../ReviewItem';
 
 const RepositoryInfo = () => {
   const { id } = useParams();
-  const { repository, loading, error } = useRepository(id);
+  const { repository, loading, error, fetchMore } = useRepository({
+    id,
+    first: 2,
+  });
 
+  const onEndReached = () => {
+    fetchMore();
+  };
   if (loading || error) {
     return null;
   }
@@ -16,11 +22,12 @@ const RepositoryInfo = () => {
     <RepositoryInfoContainer
       repository={repository}
       reviews={repository.reviews}
+      onEndReached={onEndReached}
     />
   );
 };
 
-const RepositoryInfoContainer = ({ repository, reviews }) => {
+const RepositoryInfoContainer = ({ repository, reviews, onEndReached }) => {
   const reviewNodes = reviews ? reviews.edges.map((edge) => edge.node) : [];
   return (
     <>
@@ -30,6 +37,8 @@ const RepositoryInfoContainer = ({ repository, reviews }) => {
         data={reviewNodes}
         renderItem={({ item }) => <ReviewItem review={item} />}
         keyExtractor={(item) => item.id}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.5}
         ItemSeparatorComponent={ItemSeparator}
         style={styles.container}
       />

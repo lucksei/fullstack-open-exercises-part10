@@ -13,13 +13,19 @@ const RepositoryList = () => {
   const [orderDirection, setOrderDirection] = useState('DESC');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchKeyword] = useDebounce(searchQuery, 500);
-  const { repositories } = useRepositories({
+  const { repositories, fetchMore } = useRepositories({
     orderBy,
     orderDirection,
     searchKeyword,
+    first: 3,
   });
   const onPress = (id) => {
     navigate(`/repository/${id}`);
+  };
+
+  const onEndReached = () => {
+    console.log('onEndReached');
+    fetchMore();
   };
 
   return (
@@ -30,6 +36,7 @@ const RepositoryList = () => {
       searchQuery={searchQuery}
       setSearchQuery={setSearchQuery}
       onPress={onPress}
+      onEndReached={onEndReached}
     />
   );
 };
@@ -41,6 +48,7 @@ export const RepositoryListContainer = ({
   searchQuery,
   setSearchQuery,
   onPress,
+  onEndReached,
 }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
@@ -55,6 +63,8 @@ export const RepositoryListContainer = ({
         </Pressable>
       )}
       keyExtractor={(item) => item.id}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.5}
       ItemSeparatorComponent={ItemSeparator}
       ListHeaderComponent={
         <View>
